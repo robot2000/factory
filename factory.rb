@@ -40,6 +40,26 @@ class Factory
         end
       end
 
+      define_method :== do |object|
+        return false unless self.class == object.class and self.hash == object.hash
+        return true
+      end
+
+      alias :eql? :==
+      define_method :length do
+        values.size
+      end
+
+      alias :size :length
+
+      define_method :each do |&block|
+        values.each( &block )
+      end
+
+      define_method :each_pair do |&block|
+        hash_variables.each( &block )
+      end
+
       self.class_eval(&block) if block_given?
     end
   end
